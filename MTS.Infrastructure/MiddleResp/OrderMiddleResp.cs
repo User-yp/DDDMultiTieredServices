@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MTS.Domain.Entity;
+﻿using MTS.Domain.Entity;
 using MTS.IRepository;
 
 namespace MTS.Infrastructure.Repository;

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using MTS.Domain.EnentHandler;
 using MTS.Domain.Entity;
 using MTS.Domain.IService;
 using MTS.IRepository;
@@ -9,11 +11,20 @@ public class OrderRepository:IOrderRepository
 {
     private readonly IOrderMiddleResp orderMiddleResp;
     private readonly BaseDbContext dbContext;
+    private readonly IMediator mediator;
 
-    public OrderRepository(IOrderMiddleResp orderMiddleResp, BaseDbContext dbContext)
+    public OrderRepository(IOrderMiddleResp orderMiddleResp, BaseDbContext dbContext,IMediator mediator)
     {
         this.orderMiddleResp = orderMiddleResp;
         this.dbContext = dbContext;
+        this.mediator = mediator;
+    }
+    public async Task<bool> CreateOrderAsync(Order order)
+    {
+        await orderMiddleResp.CreateAsync(order);
+        var res= await dbContext.SaveChangesAsync();
+        if(res<=0) return false;
+        return true;
     }
     public async Task<Order?> GetByIdAsync(Guid id)
     {
@@ -21,7 +32,7 @@ public class OrderRepository:IOrderRepository
     }
     public async Task<List<Order>?> GetAllAsync()
     {
-        return await dbContext.Orders.ToListAsync();
+        return await orderMiddleResp.GetAllAsync();
     }
 
     public async Task<Order?> GetByNameAsync(string Name)
@@ -48,4 +59,12 @@ public class OrderRepository:IOrderRepository
         return true;
     }
 
+    public async Task<bool>DeletedByIdAsync(Guid id)
+    {
+        var res =await GetByIdAsync(id);
+        if (res==null) return false;
+        res.SoftDelete();
+        await mediator.Publish(new OrderDeletedEvent(res));
+        return true;
+    }
 }

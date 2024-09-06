@@ -1,5 +1,6 @@
 ﻿
 using Domain;
+using MTS.Domain.EnentHandler;
 
 namespace MTS.Domain.Entity;
 
@@ -22,5 +23,10 @@ public record Order:  AggregateRootEntity, IAggregateRoot
     public void ChangeName(string name)
     {
         this.OrderName = name;
+    }
+    public override void SoftDelete()
+    {
+        //base.SoftDelete();
+        //AddDomainEvent(new OrderDeletedEvent(this));
     }
 }

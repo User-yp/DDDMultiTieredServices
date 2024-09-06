@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MTS.Domain.Entity;
+﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using MTS.IRepository;
 
 namespace MTS.Infrastructure.Repository;
 
-public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseIndex
+public abstract class BaseRepository<T> : IBaseRepository<T> where T : AggregateRootEntity
 {
     private readonly DbSet<T> dbSet;
 
@@ -12,13 +12,18 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseIndex
     {
         this.dbSet = dbSet;
     }
+
+    public async Task CreateAsync(T entity)
+    {
+        await dbSet.AddAsync(entity);
+    }
+
     public async Task<bool> DeleteAsync(Guid id)
     {
         var res =await GetAsync(id);
         if (res == null)
             return false;
-        res.Deleted();
-
+        res.SoftDelete();
         return true;
     }
 
@@ -26,4 +31,11 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseIndex
     {
          return await dbSet.FirstOrDefaultAsync(t => t.Id == id);
     }
+
+    public async Task<List<T>?> GetAllAsync()
+    {
+        return await dbSet.ToListAsync();
+    }
+
+    
 }

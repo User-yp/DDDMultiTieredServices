@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTS.Infrastructure", "MTS.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTS.WebApi", "MST.WebApi\MTS.WebApi.csproj", "{0B92D363-2C77-420D-A5A4-BB73FB7BDF15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D3632E5B-E1D4-4817-B0A6-391B45199C98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D3632E5B-E1D4-4817-B0A6-391B45199C98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{C11DAFB9-0F2F-43D6-B8E6-4722E73BD78E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C11DAFB9-0F2F-43D6-B8E6-4722E73BD78E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNETCore", "ASPNETCore\ASPNETCore.csproj", "{0FA8713A-AD4F-4182-863E-69B369DF40E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNETCore", "ASPNETCore\ASPNETCore.csproj", "{0FA8713A-AD4F-4182-863E-69B369DF40E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons", "Commons\Commons.csproj", "{6AA1C016-3587-4E22-90BA-BB60F959F748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commons", "Commons\Commons.csproj", "{6AA1C016-3587-4E22-90BA-BB60F959F748}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonGroups", "CommonGroups", "{8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3632E5B-E1D4-4817-B0A6-391B45199C98} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
+		{C11DAFB9-0F2F-43D6-B8E6-4722E73BD78E} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
+		{0FA8713A-AD4F-4182-863E-69B369DF40E9} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
+		{6AA1C016-3587-4E22-90BA-BB60F959F748} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {201245D2-0E4F-4322-B627-170599BC3276}

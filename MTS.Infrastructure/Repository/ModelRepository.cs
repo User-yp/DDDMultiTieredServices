@@ -18,7 +18,7 @@ public class ModelRepository:IModelRepository
 
     public async Task<List<Model>?> GetAllAsync()
     {
-        return await dbContext.Models.ToListAsync();
+        return await modelMiddleResp.GetAllAsync();
     }
 
     public async Task<Model?> GetByDescriptionAsync(string Description)

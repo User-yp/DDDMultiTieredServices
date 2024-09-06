@@ -15,6 +15,13 @@ public class DomainService
         this.modelRepository = modelRepository;
     }
 
+    public async Task<(OperateResult,bool)> AddOrderAsync(Order order)
+    {
+        var res = await orderRepository.CreateOrderAsync(order);
+        if (res == null)
+            return (OperateResult.Failed(new OperateError { Code = "400", Description = "AdvilidOrder" }), false);
+        return (OperateResult.Success, res);
+    }
     public async Task<(OperateResult ,Order?)> GetOrderByIdAsync(Guid Id)
     {
         var res = await orderRepository.GetByIdAsync(Id);
@@ -41,6 +48,13 @@ public class DomainService
         var res = await orderRepository.UpdateNameByIdAsync(id,name);
         if (res == false)
             return (OperateResult.Failed(new OperateError { Code = "400", Description = "NoOrder" }), false);
+        return (OperateResult.Success, res);
+    }
+
+    public async Task<(OperateResult,bool)> DeletedByIdAsync(Guid id)
+    {
+        var res = await orderRepository.DeletedByIdAsync(id);
+        if (res == false) return ( OperateResult.Failed(new OperateError{ Code = "400", Description = "NoOrder" }),false);
         return (OperateResult.Success, res);
     }
 }

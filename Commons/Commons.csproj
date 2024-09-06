@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AsmResolver" Version="5.5.1" />
     <PackageReference Include="AsmResolver.DotNet" Version="5.5.1" />
+    <PackageReference Include="EPPlus" Version="7.3.0" />
   </ItemGroup>
 
 </Project>

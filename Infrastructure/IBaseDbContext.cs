@@ -1,19 +1,15 @@
-﻿using MediatR;
+﻿using Domain;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure;
 
 public abstract class IBaseDbContext : DbContext
 {
     private IMediator? mediator;
-    public IBaseDbContext(DbContextOptions options) : base(options)
+    /*public IBaseDbContext(DbContextOptions options) : base(options)
     {
-    }
+    }*/
     public IBaseDbContext(DbContextOptions options, IMediator? mediator) : base(options)
     {
         this.mediator = mediator;

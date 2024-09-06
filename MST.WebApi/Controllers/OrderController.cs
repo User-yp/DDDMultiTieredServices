@@ -1,8 +1,12 @@
 ﻿using ASPNETCore;
+using Azure.Core;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MTS.Domain;
 using MTS.Domain.Entity;
 using MTS.Infrastructure;
+using MTS.WebApi.Mapping;
+using MTS.WebApi.Requset;
 
 namespace MTS.WebApi.Controllers;
 
@@ -13,11 +17,13 @@ public class OrderController : ControllerBase
 {
     private readonly DomainService domainService;
     private readonly BaseDbContext dbContext;
+    private readonly IValidator validator;
 
-    public OrderController(DomainService domainService, BaseDbContext dbContext)
+    public OrderController(DomainService domainService, BaseDbContext dbContext,IValidator<AddOrderRequset> validator)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
+        this.validator = validator;
     }
 
     #region Init
@@ -40,6 +46,32 @@ public class OrderController : ControllerBase
     }*/
     #endregion
 
+    [HttpGet("")]
+    public async Task<ActionResult<List<Order>>> GetAllAsync()
+    {
+        (var ope, var res) = await domainService.GetAllOrderAsync();
+        if (!ope.Succeeded)
+            return BadRequest(ope.Errors);
+        return Ok(res);
+    }
+
+    [HttpPost("")]
+    public async Task<ActionResult<bool>> AddOrderAsync([FromBody] AddOrderRequset request)
+    {
+        var context = new ValidationContext<AddOrderRequset>(request);
+        var val = await validator.ValidateAsync(context);
+        if (!val.IsValid)
+        {/*
+            _model.Code = 401;
+            _model.Msg = val.Errors.ToArray().ToString();*/
+            return BadRequest(new { Code = 401, Msg = val.Errors.ToArray().ToString() });
+        }
+        (var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
+        if (!ope.Succeeded)
+            return BadRequest(ope.Errors);
+        return Ok(res);
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<Order>> GetOderByIdAsync([FromRoute] Guid id)
     {
@@ -52,6 +84,14 @@ public class OrderController : ControllerBase
     public async Task<ActionResult<bool>> UpdateNameByIdAsync([FromRoute] Guid id,string name)
     {
         (var ope, var res) = await domainService.UpdateNameByIdAsync(id,name);
+        if (!ope.Succeeded)
+            return BadRequest(ope.Errors);
+        return Ok(res);
+    }
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Order>> DeletedOderByIdAsync([FromRoute] Guid id)
+    {
+        (var ope, var res) = await domainService.DeletedByIdAsync(id);
         if (!ope.Succeeded)
             return BadRequest(ope.Errors);
         return Ok(res);

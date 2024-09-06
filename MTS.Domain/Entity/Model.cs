@@ -17,4 +17,5 @@ public record Model:AggregateRootEntity, IAggregateRoot
         this.ModelVersion = ModelVersion;
         this.ModelDescription = ModelDescription;
     }
+
 }
