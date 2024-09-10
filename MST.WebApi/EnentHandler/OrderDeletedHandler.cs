@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MTS.Domain.EnentHandler;
+using MTS.Domain.Enent;
 using Newtonsoft.Json;
 
 namespace MTS.WebApi.EnentHandler;

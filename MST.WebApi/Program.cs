@@ -4,8 +4,7 @@ using MTS.Infrastructure;
 using MTS.WebApi;
 using FluentValidation.AspNetCore;
 using FluentValidation;
-using System.Reflection;
-using MTS.WebApi.Requset;
+using MTS.WebApi.Requset_Validator;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,19 +15,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var assemblies = ReflectionHelper.GetAllReferencedAssemblies();
 
 builder.Services.AddDbContext<BaseDbContext>();
 //add MediatR service
-builder.Services.AddMediatR(ReflectionHelper.GetAllReferencedAssemblies());
+builder.Services.AddMediatR(assemblies);
 //add custom services
 builder.Services.AddBaseServies();
 // add FluentValidation
-builder.Services.AddFluentValidationAutoValidation();
-//builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-builder.Services.AddValidatorsFromAssembly(ReflectionHelper.GetAllReferencedAssemblies());
-
-//builder.Services.AddScoped<IValidator<AddOrderRequset>, AddOrderRequsetValidator>();
+//builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidation(assemblies);
 
 
 var app = builder.Build();

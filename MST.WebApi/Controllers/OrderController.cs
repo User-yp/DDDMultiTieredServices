@@ -1,12 +1,11 @@
 ﻿using ASPNETCore;
-using Azure.Core;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MTS.Domain;
 using MTS.Domain.Entity;
 using MTS.Infrastructure;
 using MTS.WebApi.Mapping;
-using MTS.WebApi.Requset;
+using MTS.WebApi.Requset_Validator;
 
 namespace MTS.WebApi.Controllers;
 
@@ -58,14 +57,9 @@ public class OrderController : ControllerBase
     [HttpPost("")]
     public async Task<ActionResult<bool>> AddOrderAsync([FromBody] AddOrderRequset request)
     {
-        var context = new ValidationContext<AddOrderRequset>(request);
-        var val = await validator.ValidateAsync(context);
+        var val = await validator.ValidateAsync(new ValidationContext<AddOrderRequset>(request));
         if (!val.IsValid)
-        {/*
-            _model.Code = 401;
-            _model.Msg = val.Errors.ToArray().ToString();*/
             return BadRequest(new { Code = 401, Msg = val.Errors.ToArray().ToString() });
-        }
         (var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
         if (!ope.Succeeded)
             return BadRequest(ope.Errors);

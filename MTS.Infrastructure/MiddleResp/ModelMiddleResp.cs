@@ -1,7 +1,7 @@
 ﻿using MTS.Domain.Entity;
-using MTS.IRepository;
+using MTS.Domain.IMiddleResp;
 
-namespace MTS.Infrastructure.Repository;
+namespace MTS.Infrastructure.MiddleResp;
 
 public class ModelMiddleResp : BaseRepository<Model>, IModelMiddleResp
 {

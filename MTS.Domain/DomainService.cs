@@ -1,6 +1,6 @@
 ﻿using Domain;
 using MTS.Domain.Entity;
-using MTS.Domain.IService;
+using MTS.Domain.IRepository;
 
 namespace MTS.Domain;
 

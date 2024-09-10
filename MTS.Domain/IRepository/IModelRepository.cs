@@ -1,6 +1,6 @@
 ﻿using MTS.Domain.Entity;
 
-namespace MTS.Domain.IService;
+namespace MTS.Domain.IRepository;
 
 public interface IModelRepository
 {

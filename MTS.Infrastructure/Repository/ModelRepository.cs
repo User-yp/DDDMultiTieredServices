@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MTS.Domain.Entity;
-using MTS.Domain.IService;
-using MTS.IRepository;
+using MTS.Domain.IMiddleResp;
+using MTS.Domain.IRepository;
 
-namespace MTS.Infrastructure.Service;
+namespace MTS.Infrastructure.Repository;
 
-public class ModelRepository:IModelRepository
+public class ModelRepository : IModelRepository
 {
     private readonly IModelMiddleResp modelMiddleResp;
     private readonly BaseDbContext dbContext;

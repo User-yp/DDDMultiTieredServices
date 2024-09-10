@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using MTS.Domain;
-using MTS.Domain.IService;
+using MTS.Domain.IMiddleResp;
+using MTS.Domain.IRepository;
+using MTS.Infrastructure.MiddleResp;
 using MTS.Infrastructure.Repository;
-using MTS.Infrastructure.Service;
-using MTS.IRepository;
 using Newtonsoft.Json;
 using System.Collections.Frozen;
 using System.Reflection;
@@ -29,6 +29,8 @@ public static class ServiceExtensions
         {
             var validatorType = kvp.Key;
             var modelType = kvp.Value;
+
+            //services.AddScoped<typeof(IValidator<>).MakeGenericType(modelType) ,validatorType > ();
 
             //AddScoped<IValidator<AddOrderRequset>, AddOrderRequsetValidator>();
             var addScopedGenericMethod = typeof(ServiceCollectionServiceExtensions)

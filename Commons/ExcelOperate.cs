@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Commons;
 
-class ExcelOperate
+public class ExcelOperate
 {
     /// <summary>
     /// Receive a generic collection tClass and export the Excel file to the specified path.

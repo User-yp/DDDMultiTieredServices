@@ -1,4 +1,4 @@
-﻿namespace MTS.IRepository;
+﻿namespace MTS.Domain.IMiddleResp;
 
 public interface IBaseRepository<T>
 {

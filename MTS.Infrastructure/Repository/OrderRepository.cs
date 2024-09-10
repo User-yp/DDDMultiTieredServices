@@ -1,19 +1,19 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using MTS.Domain.EnentHandler;
+using MTS.Domain.Enent;
 using MTS.Domain.Entity;
-using MTS.Domain.IService;
-using MTS.IRepository;
+using MTS.Domain.IMiddleResp;
+using MTS.Domain.IRepository;
 
-namespace MTS.Infrastructure.Service;
+namespace MTS.Infrastructure.Repository;
 
-public class OrderRepository:IOrderRepository
+public class OrderRepository : IOrderRepository
 {
     private readonly IOrderMiddleResp orderMiddleResp;
     private readonly BaseDbContext dbContext;
     private readonly IMediator mediator;
 
-    public OrderRepository(IOrderMiddleResp orderMiddleResp, BaseDbContext dbContext,IMediator mediator)
+    public OrderRepository(IOrderMiddleResp orderMiddleResp, BaseDbContext dbContext, IMediator mediator)
     {
         this.orderMiddleResp = orderMiddleResp;
         this.dbContext = dbContext;
@@ -22,8 +22,8 @@ public class OrderRepository:IOrderRepository
     public async Task<bool> CreateOrderAsync(Order order)
     {
         await orderMiddleResp.CreateAsync(order);
-        var res= await dbContext.SaveChangesAsync();
-        if(res<=0) return false;
+        var res = await dbContext.SaveChangesAsync();
+        if (res <= 0) return false;
         return true;
     }
     public async Task<Order?> GetByIdAsync(Guid id)
@@ -49,20 +49,20 @@ public class OrderRepository:IOrderRepository
     {
         return await dbContext.Orders.FirstOrDefaultAsync(o => o.ProductName == ProductName);
     }
-    public async Task<bool> UpdateNameByIdAsync(Guid guid, string Name) 
+    public async Task<bool> UpdateNameByIdAsync(Guid guid, string Name)
     {
         var res = await orderMiddleResp.GetAsync(guid);
-        if (res==null)
+        if (res == null)
             return false;
         res.ChangeName(Name);
         await dbContext.SaveChangesAsync();
         return true;
     }
 
-    public async Task<bool>DeletedByIdAsync(Guid id)
+    public async Task<bool> DeletedByIdAsync(Guid id)
     {
-        var res =await GetByIdAsync(id);
-        if (res==null) return false;
+        var res = await GetByIdAsync(id);
+        if (res == null) return false;
         res.SoftDelete();
         await mediator.Publish(new OrderDeletedEvent(res));
         return true;

@@ -1,8 +1,8 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
-using MTS.IRepository;
+using MTS.Domain.IMiddleResp;
 
-namespace MTS.Infrastructure.Repository;
+namespace MTS.Infrastructure.MiddleResp;
 
 public abstract class BaseRepository<T> : IBaseRepository<T> where T : AggregateRootEntity
 {
@@ -20,7 +20,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : Aggregate
 
     public async Task<bool> DeleteAsync(Guid id)
     {
-        var res =await GetAsync(id);
+        var res = await GetAsync(id);
         if (res == null)
             return false;
         res.SoftDelete();
@@ -29,7 +29,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : Aggregate
 
     public async Task<T?> GetAsync(Guid id)
     {
-         return await dbSet.FirstOrDefaultAsync(t => t.Id == id);
+        return await dbSet.FirstOrDefaultAsync(t => t.Id == id);
     }
 
     public async Task<List<T>?> GetAllAsync()
@@ -37,5 +37,5 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : Aggregate
         return await dbSet.ToListAsync();
     }
 
-    
+
 }
