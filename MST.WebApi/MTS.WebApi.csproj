@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ASPNETCore\ASPNETCore.csproj" />
+    <ProjectReference Include="..\CommonInitializer\CommonInitializer.csproj" />
     <ProjectReference Include="..\Commons\Commons.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />

@@ -1,6 +1,6 @@
 ﻿namespace EventBus;
 
-public class IntegrationEventRabbitMQOptions
+public class RabbitMQOptions
 {
     public string HostName { get; set; }
     public string ExchangeName { get; set; }

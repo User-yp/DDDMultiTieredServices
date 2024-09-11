@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Infrastructure;
 
-public static class EFCoreInitializerHelper
+public static class EFCoreInitializerExtensions
 {
     /// <summary>
     /// 自动为所有的DbContext注册连接配置

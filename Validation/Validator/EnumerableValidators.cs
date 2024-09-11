@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using Validation.Validator;
 
-namespace Commons.Validator;
+namespace Validation.Validator;
 
 public static class EnumerableValidators
 {

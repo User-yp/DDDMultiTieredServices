@@ -1,31 +1,31 @@
-using Commons;
-using Infrastructure;
-using MTS.Infrastructure;
-using MTS.WebApi;
-using FluentValidation.AspNetCore;
-using FluentValidation;
-using MTS.WebApi.Requset_Validator;
+using CommonInitializer;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.ConfigureDbConfiguration();
+builder.ConfigureExtraServices(new InitializerOptions
+{
+    EventBusQueueName = "MST.WebApi",
+    LogFilePath = "e:/Log/MTS-Service.log"
+});
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "MST.WebApi", Version = "v1" });
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+});
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-var assemblies = ReflectionHelper.GetAllReferencedAssemblies();
-
-builder.Services.AddDbContext<BaseDbContext>();
 //add MediatR service
-builder.Services.AddMediatR(assemblies);
-//add custom services
-builder.Services.AddBaseServies();
+//builder.Services.AddMediatR(assemblies);
 // add FluentValidation
 //builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidation(assemblies);
-
 
 var app = builder.Build();
 
@@ -34,11 +34,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderService.WebAPI v1"));
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseDefault();
 
 app.MapControllers();
 

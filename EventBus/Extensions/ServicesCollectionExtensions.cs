@@ -11,10 +11,10 @@ public static class ServicesCollectionExtensions
 {
     public static IServiceCollection AddEventBus(this IServiceCollection services, string queueName, params Assembly[] assemblies)
     {
-        return services.AddEventBus(queueName, assemblies.ToList());
+        return services.AddEventBus(queueName,null ,assemblies.ToList());
     }
 
-    public static IServiceCollection AddEventBus(this IServiceCollection services, string queueName, IEnumerable<Assembly> assemblies)
+    public static IServiceCollection AddEventBus(this IServiceCollection services, string queueName,RabbitMQOptions? optionMQ, IEnumerable<Assembly> assemblies )
     {
         List<Type> eventHandlers = new List<Type>();
         foreach (var asm in assemblies)
@@ -23,7 +23,7 @@ public static class ServicesCollectionExtensions
             var types = asm.GetTypes().Where(t => t.IsAbstract == false && t.IsAssignableTo(typeof(IIntegrationEventHandler)));
             eventHandlers.AddRange(types);
         }
-        return services.AddEventBus(queueName, eventHandlers);
+        return services.InitEventBus(queueName, eventHandlers, optionMQ);
     }
 
     /// <summary>
@@ -35,18 +35,17 @@ public static class ServicesCollectionExtensions
     ///</param>
     /// <param name="eventHandlerTypes"></param>
     /// <returns></returns>
-    public static IServiceCollection AddEventBus(this IServiceCollection services, string queueName, IEnumerable<Type> eventHandlerTypes)
+    public static IServiceCollection InitEventBus(this IServiceCollection services, string queueName,IEnumerable<Type> eventHandlerTypes ,RabbitMQOptions? optionMQ )
     {
         foreach (Type type in eventHandlerTypes)
         {
             services.AddScoped(type, type);
         }
-
         services.AddSingleton<IEventBus>(sp =>
         {
             //如果注册服务的时候就要读取配置，那么可以用AddSingleton的Func<IServiceProvider, TService> 这个重载，
             //因为可以拿到IServiceProvider，省得自己构建IServiceProvider
-            var optionMQ = sp.GetRequiredService<IOptions<IntegrationEventRabbitMQOptions>>().Value;
+            optionMQ ??= sp.GetRequiredService<IOptions<RabbitMQOptions>>().Value;
             var factory = new ConnectionFactory() { HostName = optionMQ.HostName, DispatchConsumersAsync = true };
 
             if (optionMQ.UserName != null)
