@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Commons;
+namespace Commons.Initializer;
 
 public interface IModuleInitializer
 {
