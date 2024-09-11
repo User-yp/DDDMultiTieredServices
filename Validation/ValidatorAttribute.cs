@@ -2,23 +2,23 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace ASPNETCore;
+namespace Validation;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ValidatorAttribute : Attribute
 {
     public ServiceLifetime LifeTime { get; set; }
     public Type ServiceType { get; init; }
-    public ValidatorAttribute(Type ServiceType,ServiceLifetime LifeTime = ServiceLifetime.Scoped )
+    public ValidatorAttribute(Type ServiceType, ServiceLifetime LifeTime = ServiceLifetime.Scoped)
     {
         //验证ServiceType是否继承自AbstractValidator<>
         if (!CheckValidator(ServiceType))
             throw new ArgumentException($"The type {ServiceType.FullName} must implement AbstractValidator<>.");
 
-        this. LifeTime = LifeTime;
+        this.LifeTime = LifeTime;
         this.ServiceType = ServiceType;
     }
-    private bool CheckValidator(Type type)
+    private static bool CheckValidator(Type type)
     {
         // 获取 AbstractValidator<T> 的类型  
         var abstractValidatorType = typeof(AbstractValidator<>);

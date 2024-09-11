@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "EventBus\EventB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jwt", "Jwt\Jwt.csproj", "{B9438F96-FCCB-4ACA-B1E6-9E6FAAEA1793}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Validation\Validation.csproj", "{4557735D-979C-47BD-9A0D-7500BB1A8BA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{B9438F96-FCCB-4ACA-B1E6-9E6FAAEA1793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9438F96-FCCB-4ACA-B1E6-9E6FAAEA1793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9438F96-FCCB-4ACA-B1E6-9E6FAAEA1793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4557735D-979C-47BD-9A0D-7500BB1A8BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4557735D-979C-47BD-9A0D-7500BB1A8BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4557735D-979C-47BD-9A0D-7500BB1A8BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4557735D-979C-47BD-9A0D-7500BB1A8BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{591D64FC-96DB-41F2-9CB1-F95E52FD10FF} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
 		{E96BC89C-BFD5-4565-A491-7BF355AE7809} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
 		{B9438F96-FCCB-4ACA-B1E6-9E6FAAEA1793} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
+		{4557735D-979C-47BD-9A0D-7500BB1A8BA7} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {201245D2-0E4F-4322-B627-170599BC3276}

@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\MTS.Domain\MTS.Domain.csproj" />
     <ProjectReference Include="..\MTS.Infrastructure\MTS.Infrastructure.csproj" />
+    <ProjectReference Include="..\Validation\Validation.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,8 @@
-﻿using ASPNETCore;
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Validation;
 
-namespace MTS.WebApi;
+namespace Validation;
 
 public static class ValidatorExtensions
 {
@@ -11,7 +10,7 @@ public static class ValidatorExtensions
     /// 按特性中的生命周期注入业务组件
     /// </summary>
     /// <param name="service"></param>
-    public static void AddFluentValidation(this IServiceCollection service,IEnumerable<Assembly> assemblies)
+    public static void AddFluentValidation(this IServiceCollection service, IEnumerable<Assembly> assemblies)
     {
         //获取有ServiceAttribute特性的所有类
         List<Type> types = assemblies
