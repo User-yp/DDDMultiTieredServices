@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Unicode;
 
-namespace Commons;
+namespace Commons.Extensions;
 
 public static class JsonExtentions
 {

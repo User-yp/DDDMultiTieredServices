@@ -18,6 +18,7 @@
     <ProjectReference Include="..\CommonInitializer\CommonInitializer.csproj" />
     <ProjectReference Include="..\Commons\Commons.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\EventBus\EventBus.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\MTS.Domain\MTS.Domain.csproj" />
     <ProjectReference Include="..\MTS.Infrastructure\MTS.Infrastructure.csproj" />

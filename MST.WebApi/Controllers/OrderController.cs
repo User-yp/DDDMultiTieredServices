@@ -1,4 +1,5 @@
 ﻿using ASPNETCore;
+using EventBus;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MTS.Domain;
@@ -6,6 +7,7 @@ using MTS.Domain.Entity;
 using MTS.Infrastructure;
 using MTS.WebApi.Mapping;
 using MTS.WebApi.Requset_Validator;
+using System.Runtime.CompilerServices;
 
 namespace MTS.WebApi.Controllers;
 
@@ -16,12 +18,14 @@ public class OrderController : ControllerBase
 {
     private readonly DomainService domainService;
     private readonly BaseDbContext dbContext;
+    private readonly IEventBus eventBus;
     private readonly IValidator validator;
 
-    public OrderController(DomainService domainService, BaseDbContext dbContext,IValidator<AddOrderRequset> validator)
+    public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus, IValidator<AddOrderRequset> validator)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
+        this.eventBus = eventBus;
         this.validator = validator;
     }
 
@@ -44,6 +48,13 @@ public class OrderController : ControllerBase
         return Ok("Success!");
     }*/
     #endregion
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult<string>> TestActionAsync()
+    {
+        eventBus.Publish("RabbitMqController", "eventTest");
+        return ("Success!");
+    }
 
     [HttpGet("")]
     public async Task<ActionResult<List<Order>>> GetAllAsync()

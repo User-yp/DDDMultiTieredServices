@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Jwt;
+namespace Jwt.Extensions;
 
 public static class AuthenticationExtensions
 {

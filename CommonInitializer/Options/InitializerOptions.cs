@@ -1,4 +1,4 @@
-﻿namespace CommonInitializer;
+﻿namespace CommonInitializer.Options;
 
 public class InitializerOptions
 {

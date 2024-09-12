@@ -54,7 +54,8 @@ public class DomainService
     public async Task<(OperateResult,bool)> DeletedByIdAsync(Guid id)
     {
         var res = await orderRepository.DeletedByIdAsync(id);
-        if (res == false) return ( OperateResult.Failed(new OperateError{ Code = "400", Description = "NoOrder" }),false);
+        if (res == false) 
+            return ( OperateResult.Failed(new OperateError{ Code = "400", Description = "NoOrder" }),false);
         return (OperateResult.Success, res);
     }
 }

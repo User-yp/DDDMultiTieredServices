@@ -1,4 +1,5 @@
 using CommonInitializer;
+using CommonInitializer.Options;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

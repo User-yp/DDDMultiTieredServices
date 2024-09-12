@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace Commons;
+namespace Commons.Extensions;
 
 public static class ApolloExtensions
 {

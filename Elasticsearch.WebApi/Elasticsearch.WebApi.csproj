@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Elasticsearch.Domain\Elasticsearch.Domain.csproj" />
+    <ProjectReference Include="..\Elasticsearch.WebApi.Core\Elasticsearch.WebApi.Core.csproj" />
+    <ProjectReference Include="..\MTS.Infrastructure\MTS.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

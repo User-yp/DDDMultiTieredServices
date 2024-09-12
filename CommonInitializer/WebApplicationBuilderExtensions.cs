@@ -16,7 +16,9 @@ using Serilog;
 using CacheServices;
 using Com.Ctrip.Framework.Apollo.Enums;
 using Com.Ctrip.Framework.Apollo;
-using Newtonsoft.Json;
+using CommonInitializer.Options;
+using Commons.Extensions;
+using Jwt.Extensions;
 
 namespace CommonInitializer;
 
@@ -69,8 +71,8 @@ public static class WebApplicationBuilderExtensions
         builder.Services.Configure<SwaggerGenOptions>(c =>
         {
             c.AddAuthenticationHeader();
-        });
-        //结束:Authentication,Authorization
+        });//结束:Authentication,Authorization
+        
 
         //注册MediatR领域通讯
         services.AddMediatR(assemblies);
@@ -93,7 +95,7 @@ public static class WebApplicationBuilderExtensions
             //更好的在Program.cs中用绑定方式读取配置的方法：https://github.com/dotnet/aspnetcore/issues/21491
             //不过比较麻烦。
             //var corsOpt = configuration.GetSection("Cors").Get<CorsSettings>();
-            var corsOpt = configuration.GetSection("Cors").GetOptions<CorsSettings>();
+            var corsOpt = configuration.GetSection("Cors").GetOptions<CorsOptions>();
             string[] urls = corsOpt.Origins;
             options.AddDefaultPolicy(builder => builder.WithOrigins(urls)
                     .AllowAnyMethod().AllowAnyHeader().AllowCredentials());
