@@ -5,7 +5,7 @@ using Validation;
 namespace MTS.WebApi.Requset_Validator;
 
 [Validator(typeof(AddOrderRequsetValidator),ServiceLifetime.Scoped)]
-public record AddOrderRequset(string OrderName, string ProductName, string ProductDescription);
+public record AddOrderRequset(string OrderName, string ProductName, string ProductDescription): RequsetBase;
 
 public class AddOrderRequsetValidator : AbstractValidator<AddOrderRequset>
 {

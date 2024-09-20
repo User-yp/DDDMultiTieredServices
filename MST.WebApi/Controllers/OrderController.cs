@@ -1,5 +1,7 @@
 ﻿using ASPNETCore;
+using Azure.Core;
 using CacheServices.RedisService;
+using Commons.OperateHelper;
 using EventBus;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,7 @@ using MTS.Infrastructure;
 using MTS.WebApi.Mapping;
 using MTS.WebApi.Requset_Validator;
 using System.Runtime.CompilerServices;
+using Validation;
 
 namespace MTS.WebApi.Controllers;
 
@@ -23,7 +26,8 @@ public class OrderController : ControllerBase
     private readonly IRedisService redisService;
     private readonly IValidator validator;
 
-    public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus,IRedisService redisService, IValidator<AddOrderRequset> validator)
+    public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus,
+        IRedisService redisService, IValidator<TestRequset> validator)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
@@ -53,11 +57,14 @@ public class OrderController : ControllerBase
     #endregion
 
     [HttpPost("[action]")]
-    public async Task<ActionResult<string>> TestActionAsync()
+    public async Task<IActionResult> TestActionAsync([FromBody] TestRequset request)
     {
         //eventBus.Publish("RabbitMqController", "eventTest");
         //await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
-        return ("Success!");
+        //var res = NormalRandomHelper.GetNormalDoubles(50);
+
+        var res = await validator.RequestValidateAsync(request);
+        return Ok(res);
     }
 
     [HttpGet("")]
@@ -72,13 +79,17 @@ public class OrderController : ControllerBase
     [HttpPost("")]
     public async Task<ActionResult<bool>> AddOrderAsync([FromBody] AddOrderRequset request)
     {
-        var val = await validator.ValidateAsync(new ValidationContext<AddOrderRequset>(request));
+        /*var val = await validator.ValidateAsync(new ValidationContext<AddOrderRequset>(request));
         if (!val.IsValid)
-            return BadRequest(new { Code = 401, Msg = val.Errors.ToArray().ToString() });
-        (var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
+            return BadRequest(new { Code = 401, Msg = val.Errors.ToArray().ToString() });*/
+        var a = await validator.RequestValidateAsync(request);
+
+        return Ok(a);
+        /*(var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
         if (!ope.Succeeded)
             return BadRequest(ope.Errors);
-        return Ok(res);
+
+        return Ok(res);*/
     }
 
     [HttpGet("{id}")]
