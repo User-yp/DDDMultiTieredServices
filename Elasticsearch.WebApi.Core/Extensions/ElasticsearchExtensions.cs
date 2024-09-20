@@ -1,23 +1,23 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Commons.Extensions;
+using Commons.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Elasticsearch.WebApi.Core.Extensions;
 
 public static class ElasticsearchExtensions
 {
-    public static void AddElasticsearch(this IServiceCollection services, IConfiguration configuration)
+    //get option from configuration
+    public static void AddElasticsearch(this IServiceCollection services, IConfiguration configuration )
     {
-        var defaultIndex = configuration["ElasticsearchSettings:defaultIndex"];
-        var basicAuthUser = configuration["ElasticsearchSettings:username"];
-        var basicAuthPassword = configuration["ElasticsearchSettings:password"];
+        var elasticOptions= configuration.GetSection(nameof(ElasticOptions)).GetOptions<ElasticOptions>();
 
-        var settings = new ConnectionSettings(new Uri(configuration["ElasticsearchSettings:uri"]));
+        var defaultIndex = elasticOptions.DefaultIndex;
+        var basicAuthUser = elasticOptions.UserName;
+        var basicAuthPassword = elasticOptions.Password;
+
+        var settings = new ConnectionSettings(elasticOptions.Uri);
 
         if (!string.IsNullOrEmpty(defaultIndex))
             settings = settings.DefaultIndex(defaultIndex);
@@ -29,11 +29,10 @@ public static class ElasticsearchExtensions
 
         services.AddSingleton<IElasticClient>(new ElasticClient(settings));
     }
+
+    //get configuration from ESstr
     public static void AddElasticsearch(this IServiceCollection services, string EsStr)
     {
-        /*var conn=  new ConnectionSettings(new Uri(EsStr));
-        var setting=new ElasticClient(conn);*/
-
         services.AddSingleton<IElasticClient>(sp =>
         {
             return new ElasticClient(new ConnectionSettings(new Uri(EsStr)));

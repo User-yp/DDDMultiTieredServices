@@ -16,9 +16,11 @@ using Serilog;
 using CacheServices;
 using Com.Ctrip.Framework.Apollo.Enums;
 using Com.Ctrip.Framework.Apollo;
-using CommonInitializer.Options;
 using Commons.Extensions;
 using Jwt.Extensions;
+using Commons.Options;
+using CacheServices.RedisService;
+using Commons.OperateHelper;
 
 namespace CommonInitializer;
 
@@ -55,7 +57,7 @@ public static class WebApplicationBuilderExtensions
             //连接字符串如果放到appsettings.json中，会有泄密的风险
             //如果放到UserSecrets中，每个项目都要配置，很麻烦
             //因此这里推荐放到环境变量中。
-            string connStr = configuration.GetValue<string>("ConnStr");
+            string connStr = configuration.GetValue<string>(nameof(ConnStr));
             ctx.UseSqlServer(connStr);
         }, assemblies);
 
@@ -65,7 +67,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication();
         //JWTOptions jwtOpt = configuration.GetSection("JWT").Get<JWTOptions>();
-        var jwtOpt =configuration.GetSection("JWT").GetOptions<JWTOptions>();
+        var jwtOpt =configuration.GetSection(nameof(JWTOptions)).GetOptions<JWTOptions>();
         builder.Services.AddJWTAuthentication(jwtOpt);
         //启用Swagger中的【Authorize】按钮。这样就不用每个项目的AddSwaggerGen中单独配置了
         builder.Services.Configure<SwaggerGenOptions>(c =>
@@ -95,7 +97,7 @@ public static class WebApplicationBuilderExtensions
             //更好的在Program.cs中用绑定方式读取配置的方法：https://github.com/dotnet/aspnetcore/issues/21491
             //不过比较麻烦。
             //var corsOpt = configuration.GetSection("Cors").Get<CorsSettings>();
-            var corsOpt = configuration.GetSection("Cors").GetOptions<CorsOptions>();
+            var corsOpt = configuration.GetSection(nameof(CorsOptions)).GetOptions<CorsOptions>();
             string[] urls = corsOpt.Origins;
             options.AddDefaultPolicy(builder => builder.WithOrigins(urls)
                     .AllowAnyMethod().AllowAnyHeader().AllowCredentials());
@@ -118,14 +120,19 @@ public static class WebApplicationBuilderExtensions
         
         //注册EventBus
         //services.Configure<RabbitMQOptions>(configuration.GetSection("RabbitMQ"));
-        var rabbitMQOptions = configuration.GetSection("RabbitMQ").GetOptions<RabbitMQOptions>();
+        var rabbitMQOptions = configuration.GetSection(nameof(RabbitMQOptions)).GetOptions<RabbitMQOptions>();
         services.AddEventBus(initOptions.EventBusQueueName, rabbitMQOptions, assemblies);
 
         //注册Redis
         services.AddRedisService(redisOption =>
         {
-            redisOption.ConnectionString = configuration.GetValue<string>("Redis");
-            redisOption.DbNumber = 0;
+            var res= builder.Configuration.GetSection(nameof(RedisOptions)).GetOptions<RedisOptions>();
+            redisOption.ConnectionString = res.ConnectionString;
+            redisOption.DbNumber=res.DbNumber;
+
         });
+
+        //启用内存缓存
+        services.AddMemoryCacheService();
     }
 }

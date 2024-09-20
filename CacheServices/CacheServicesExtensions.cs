@@ -16,6 +16,7 @@ public static class CacheServicesExtensions
         services.AddOptions<RedisOptions>()
                 .Configure(configuration.Bind)
                 .ValidateDataAnnotations();
+
         services.AddSingleton<IRedisService, RedisService.RedisService>();
         return services;
     }
@@ -30,6 +31,7 @@ public static class CacheServicesExtensions
         services.AddSingleton<IRedisService, RedisService.RedisService>();
         return services;
     }
+
     public static IServiceCollection AddMemoryCacheService(this IServiceCollection services)
     {
         services.AddMemoryCache();

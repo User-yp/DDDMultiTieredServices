@@ -19,4 +19,5 @@ public static class RandomExtensions
         double x = random.NextDouble();
         return x * maxValue + (1 - x) * minValue;
     }
+
 }

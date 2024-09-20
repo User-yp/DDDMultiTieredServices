@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommonInitializer\CommonInitializer.csproj" />
     <ProjectReference Include="..\Elasticsearch.Domain\Elasticsearch.Domain.csproj" />
     <ProjectReference Include="..\Elasticsearch.WebApi.Core\Elasticsearch.WebApi.Core.csproj" />
     <ProjectReference Include="..\MTS.Infrastructure\MTS.Infrastructure.csproj" />

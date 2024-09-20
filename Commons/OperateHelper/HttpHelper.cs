@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 
-namespace Commons;
+namespace Commons.OperateHelper;
 
 public static class HttpHelper
 {
@@ -22,7 +22,7 @@ public static class HttpHelper
         var resp = await httpClient.GetAsync(url, cancellationToken);
         if (resp.IsSuccessStatusCode)
         {
-            await SaveToFileAsync(resp, localFile, cancellationToken);
+            await resp.SaveToFileAsync(localFile, cancellationToken);
             return resp.StatusCode;
         }
         else

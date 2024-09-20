@@ -35,6 +35,7 @@ public static class ApiConfigurationExtensions
         app.UseSerilogRequestLogging(opts => opts.EnrichDiagnosticContext = SerilogExtensions.EnrichFromRequest);
 
         app.UseMiddleware<RequestSerilLogMiddleware>();
+
         app.UseMiddleware<ErrorHandlingMiddleware>();
 
         app.UseHttpsRedirection();

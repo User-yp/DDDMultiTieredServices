@@ -1,11 +1,13 @@
 using CommonInitializer;
-using CommonInitializer.Options;
-using System.Reflection;
+using Commons.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//ApplicationBuilder
 builder.ConfigureDbConfiguration();
+//WebApplicationBuilder
 builder.ConfigureExtraServices(new InitializerOptions
 {
     EventBusQueueName = "MST.WebApi",

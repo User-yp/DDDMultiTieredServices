@@ -1,4 +1,5 @@
 ﻿using ASPNETCore;
+using CacheServices.RedisService;
 using EventBus;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,15 @@ public class OrderController : ControllerBase
     private readonly DomainService domainService;
     private readonly BaseDbContext dbContext;
     private readonly IEventBus eventBus;
+    private readonly IRedisService redisService;
     private readonly IValidator validator;
 
-    public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus, IValidator<AddOrderRequset> validator)
+    public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus,IRedisService redisService, IValidator<AddOrderRequset> validator)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
         this.eventBus = eventBus;
+        this.redisService = redisService;
         this.validator = validator;
     }
 
@@ -52,7 +55,8 @@ public class OrderController : ControllerBase
     [HttpPost("[action]")]
     public async Task<ActionResult<string>> TestActionAsync()
     {
-        eventBus.Publish("RabbitMqController", "eventTest");
+        //eventBus.Publish("RabbitMqController", "eventTest");
+        //await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
         return ("Success!");
     }
 

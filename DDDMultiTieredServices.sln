@@ -33,13 +33,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSTService", "MSTService", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SearchService", "SearchService", "{1CE09E23-93A5-4B03-B0F3-F3985FCFA984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.Domain", "Elasticsearch.Domain\Elasticsearch.Domain.csproj", "{9AF530F2-C5B0-47DF-B939-6E1B05163DBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Domain", "Elasticsearch.Domain\Elasticsearch.Domain.csproj", "{9AF530F2-C5B0-47DF-B939-6E1B05163DBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.Infrastructure", "Elasticsearch.Infrastructure\Elasticsearch.Infrastructure.csproj", "{9C2B5D34-BB7B-4972-96AA-A9651C4EE5F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.Infrastructure", "Elasticsearch.Infrastructure\Elasticsearch.Infrastructure.csproj", "{9C2B5D34-BB7B-4972-96AA-A9651C4EE5F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.WebApi.Core", "Elasticsearch.WebApi.Core\Elasticsearch.WebApi.Core.csproj", "{445ACBCB-FE01-451B-913D-E1FAF2618241}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.WebApi.Core", "Elasticsearch.WebApi.Core\Elasticsearch.WebApi.Core.csproj", "{445ACBCB-FE01-451B-913D-E1FAF2618241}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elasticsearch.WebApi", "Elasticsearch.WebApi\Elasticsearch.WebApi.csproj", "{A4A4603C-87BF-4076-BAA2-0C1E37AE8A3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elasticsearch.WebApi", "Elasticsearch.WebApi\Elasticsearch.WebApi.csproj", "{A4A4603C-87BF-4076-BAA2-0C1E37AE8A3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{8F9E06D4-5FB8-4111-B6F0-6BCEC045EB05}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.Domain", "IdentityService.Domain\IdentityService.Domain.csproj", "{E3EB3D10-F087-4242-96BC-B314E80A4AF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.Infrastructure", "IdentityService.Infrastructure\IdentityService.Infrastructure.csproj", "{EEB85A34-CDD6-4CB3-B70C-1E42B84187B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.WebAPI", "IdentityService.WebAPI\IdentityService.WebAPI.csproj", "{71D83421-CA28-4C2D-8536-1E233F6FD22E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AliSDK", "AliSDK\AliSDK.csproj", "{8B909622-017D-4105-9FC7-E33C6D28AC2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +121,22 @@ Global
 		{A4A4603C-87BF-4076-BAA2-0C1E37AE8A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4A4603C-87BF-4076-BAA2-0C1E37AE8A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4A4603C-87BF-4076-BAA2-0C1E37AE8A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3EB3D10-F087-4242-96BC-B314E80A4AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3EB3D10-F087-4242-96BC-B314E80A4AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3EB3D10-F087-4242-96BC-B314E80A4AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3EB3D10-F087-4242-96BC-B314E80A4AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB85A34-CDD6-4CB3-B70C-1E42B84187B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB85A34-CDD6-4CB3-B70C-1E42B84187B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB85A34-CDD6-4CB3-B70C-1E42B84187B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB85A34-CDD6-4CB3-B70C-1E42B84187B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D83421-CA28-4C2D-8536-1E233F6FD22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D83421-CA28-4C2D-8536-1E233F6FD22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D83421-CA28-4C2D-8536-1E233F6FD22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D83421-CA28-4C2D-8536-1E233F6FD22E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B909622-017D-4105-9FC7-E33C6D28AC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B909622-017D-4105-9FC7-E33C6D28AC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B909622-017D-4105-9FC7-E33C6D28AC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B909622-017D-4105-9FC7-E33C6D28AC2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +158,10 @@ Global
 		{9C2B5D34-BB7B-4972-96AA-A9651C4EE5F3} = {1CE09E23-93A5-4B03-B0F3-F3985FCFA984}
 		{445ACBCB-FE01-451B-913D-E1FAF2618241} = {1CE09E23-93A5-4B03-B0F3-F3985FCFA984}
 		{A4A4603C-87BF-4076-BAA2-0C1E37AE8A3B} = {1CE09E23-93A5-4B03-B0F3-F3985FCFA984}
+		{E3EB3D10-F087-4242-96BC-B314E80A4AF7} = {8F9E06D4-5FB8-4111-B6F0-6BCEC045EB05}
+		{EEB85A34-CDD6-4CB3-B70C-1E42B84187B4} = {8F9E06D4-5FB8-4111-B6F0-6BCEC045EB05}
+		{71D83421-CA28-4C2D-8536-1E233F6FD22E} = {8F9E06D4-5FB8-4111-B6F0-6BCEC045EB05}
+		{8B909622-017D-4105-9FC7-E33C6D28AC2C} = {8F0BD1C5-6CDE-41D5-BB25-E8BE2D9DFE31}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {201245D2-0E4F-4322-B627-170599BC3276}

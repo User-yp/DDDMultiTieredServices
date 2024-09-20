@@ -1,4 +1,6 @@
-﻿using Elastic.Apm.SerilogEnricher;
+﻿using Commons.Extensions;
+using Commons.Options;
+using Elastic.Apm.SerilogEnricher;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -16,17 +18,17 @@ public static class SerilogExtensions
 {
     public static WebApplicationBuilder AddSerilog(this WebApplicationBuilder builder, IConfiguration configuration, string applicationName)
     {
-        var str = new Uri(configuration["ElasticsearchSettings:uri"]);
+        var elasticOptions = configuration.GetSection("ElasticOptions").GetOptions<ElasticOptions>();
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration)
+            .ReadFrom.Configuration(builder.Configuration)
             .Enrich.WithProperty("ApplicationName", $"{applicationName} - {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}")
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .Enrich.WithEnvironmentUserName()
-        .Enrich.WithElasticApmCorrelationInfo()
+            .Enrich.WithElasticApmCorrelationInfo()
             .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore.StaticFiles"))
             .Filter.ByExcluding(z => z.MessageTemplate.Text.Contains("specific error"))
-            .WriteTo.Async(writeTo => writeTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(configuration["ElasticsearchSettings:uri"]))
+            .WriteTo.Async(writeTo => writeTo.Elasticsearch(new ElasticsearchSinkOptions(elasticOptions.Uri)
             {
                 TypeName = null,
                 AutoRegisterTemplate = true,
@@ -35,7 +37,7 @@ public static class SerilogExtensions
                 FailureCallback = e => Console.WriteLine("Unable to submit event " + e.MessageTemplate),
                 BatchAction = ElasticOpType.Create,
                 BatchPostingLimit = 5,
-                ModifyConnectionSettings = x => x.BasicAuthentication(configuration["ElasticsearchSettings:username"], configuration["ElasticsearchSettings:password"])
+                ModifyConnectionSettings = x => x.BasicAuthentication(elasticOptions.UserName, elasticOptions.Password)
             }))
             .WriteTo.Async(writeTo => writeTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"))
             .WriteTo.Debug()

@@ -1,4 +1,4 @@
-﻿namespace Commons;
+﻿namespace Commons.OperateHelper;
 
 public static class IOHelper
 {

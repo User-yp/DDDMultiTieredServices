@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Commons\Commons.csproj" />
     <ProjectReference Include="..\Elasticsearch.Domain\Elasticsearch.Domain.csproj" />
     <ProjectReference Include="..\Elasticsearch.Infrastructure\Elasticsearch.Infrastructure.csproj" />
   </ItemGroup>

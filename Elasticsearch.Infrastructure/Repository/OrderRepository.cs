@@ -1,11 +1,6 @@
 ﻿using Elasticsearch.Domain.Entity;
 using Elasticsearch.Domain.IMiddleResp;
 using Elasticsearch.Domain.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Elasticsearch.Infrastructure.Repository;
 

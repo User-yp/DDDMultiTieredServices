@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Commons;
+namespace Commons.OperateHelper;
 
 public static class HashHelper
 {

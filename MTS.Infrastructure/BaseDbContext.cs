@@ -16,19 +16,18 @@ public class BaseDbContext: IBaseDbContext
     {
         
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ConnStr"));
 
-        /*optionsBuilder.LogTo(str =>
+        *//*optionsBuilder.LogTo(str =>
         {
             if (!str.Contains("Executing"))
                 return;
             Console.WriteLine(str);
-        });*/
-
-    }
+        });*//*
+    }*/
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

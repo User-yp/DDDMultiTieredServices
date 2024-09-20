@@ -1,4 +1,4 @@
-﻿namespace CommonInitializer.Options;
+﻿namespace Commons.Options;
 
 public class CorsOptions
 {

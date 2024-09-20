@@ -1,19 +1,23 @@
+using CommonInitializer;
 using Elasticsearch.WebApi.Core.Extensions;
 using Serilog;
-
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+    builder.ConfigureDbConfiguration();
+    
     builder.AddSerilog(builder.Configuration, "API Elasticsearch");
     Log.Information("Starting API");
 
     builder.Services.AddApiConfiguration();
-    //builder.Services.AddElasticsearch(builder.Configuration);
-    builder.Services.AddElasticsearch(Environment.GetEnvironmentVariable("ES:ConnStr"));
+    
+    builder.Services.AddElasticsearch(builder.Configuration);
+
     builder.Services.AddSwagger(builder.Configuration);
 
     builder.Services.AddEndpointsApiExplorer();
+
     builder.Services.AddSwaggerGen();
 
     var app = builder.Build();

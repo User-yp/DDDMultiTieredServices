@@ -1,4 +1,6 @@
-﻿namespace Commons;
+﻿using Commons;
+
+namespace Commons.OperateHelper;
 
 public static class FormattableStringHelper
 {
