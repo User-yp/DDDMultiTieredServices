@@ -1,5 +1,6 @@
 using CommonInitializer;
 using Commons.Options;
+using MTS.WebApi.Requset_Validator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddEndpointsApiExplorer();
 
+
+builder.Services.AddScoped<ValidatorControl>();
 //add MediatR service
 //builder.Services.AddMediatR(assemblies);
 // add FluentValidation

@@ -24,10 +24,10 @@ public class OrderController : ControllerBase
     private readonly BaseDbContext dbContext;
     private readonly IEventBus eventBus;
     private readonly IRedisService redisService;
-    private readonly IValidator validator;
+    private readonly ValidatorControl validator;
 
     public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus,
-        IRedisService redisService, IValidator<TestRequset> validator)
+        IRedisService redisService, ValidatorControl validator)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
@@ -63,8 +63,9 @@ public class OrderController : ControllerBase
         //await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
         //var res = NormalRandomHelper.GetNormalDoubles(50);
 
-        var res = await validator.RequestValidateAsync(request);
-        return Ok(res);
+        Type type = typeof(ValidatorControl); 
+        //var res = await validator.TestRequset.RequestValidateAsync(request);
+        return Ok();
     }
 
     [HttpGet("")]
@@ -82,7 +83,7 @@ public class OrderController : ControllerBase
         /*var val = await validator.ValidateAsync(new ValidationContext<AddOrderRequset>(request));
         if (!val.IsValid)
             return BadRequest(new { Code = 401, Msg = val.Errors.ToArray().ToString() });*/
-        var a = await validator.RequestValidateAsync(request);
+        var a = await validator.AddOrderRequset.RequestValidateAsync(request);
 
         return Ok(a);
         /*(var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());

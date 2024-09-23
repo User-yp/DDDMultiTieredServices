@@ -19,6 +19,11 @@ public static class ValidatorExtensions
                     && t.GetCustomAttributes(typeof(ValidatorAttribute), false).Length > 0)
             .ToList();
 
+        List<Type> res = assemblies
+            .SelectMany(x => x.GetTypes())
+            .Where(t => t.GetInterface())
+            .ToList();
+
         types.ForEach(impl =>
         {
             //获取生命周期
@@ -53,6 +58,11 @@ public static class ValidatorExtensions
             &&t.GetCustomAttributes(typeof(ValidatorAttribute), false).Length != 0)
             .ToList();
 
+        List<Type> res = assemblies.GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract
+            && t.BaseType==typeof(IValidatorControl))
+            .ToList();
+
         types.ForEach(impl =>
         {
             //获取生命周期
@@ -61,7 +71,8 @@ public static class ValidatorExtensions
             var serviceType = impl.GetCustomAttribute<ValidatorAttribute>().ServiceType;
             //写入泛型参数，获取IValidator<>类型
             var validatorType = typeof(IValidator<>).MakeGenericType(impl);
-
+             
+            //var res=typeof()
             //获取该类注入的生命周期
             switch (lifetime)
             {
