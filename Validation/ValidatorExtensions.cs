@@ -10,21 +10,19 @@ public static class ValidatorExtensions
     /// 按特性中的生命周期注入业务组件
     /// </summary>
     /// <param name="service"></param>
-    public static IServiceCollection AddFluentValidation(this IServiceCollection service, IEnumerable<Assembly> assemblies)
+    public static ServiceProvider AddFluentValidation(this IServiceCollection service, IEnumerable<Assembly> assemblies)
     {
         //获取有ServiceAttribute特性的所有类
-        List<Type> types = assemblies
+        List<Type> typeAttribute = assemblies
             .SelectMany(x => x.GetTypes())
             .Where(t => t.IsClass && !t.IsAbstract
                     && t.GetCustomAttributes(typeof(ValidatorAttribute), false).Length > 0)
             .ToList();
 
-        List<Type> res = assemblies
-            .SelectMany(x => x.GetTypes())
-            .Where(t => t.GetInterface())
-            .ToList();
+        if(typeAttribute.Count==0)
+            return service.BuildServiceProvider();
 
-        types.ForEach(impl =>
+        typeAttribute.ForEach(impl =>
         {
             //获取生命周期
             var lifetime = impl.GetCustomAttribute<ValidatorAttribute>().LifeTime;
@@ -47,23 +45,22 @@ public static class ValidatorExtensions
                     break;
             }
         });
-        return service;
+        
+        return service.BuildServiceProvider();
     }
 
-    public static IServiceCollection AddFluentValidation(this IServiceCollection service, Assembly assemblies)
+    public static ServiceProvider AddFluentValidation(this IServiceCollection service, Assembly assemblies)
     {
         //获取有ServiceAttribute特性的所有类
-        List<Type> types = assemblies.GetTypes()
+        List<Type> typeAttribute = assemblies.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract 
             &&t.GetCustomAttributes(typeof(ValidatorAttribute), false).Length != 0)
             .ToList();
 
-        List<Type> res = assemblies.GetTypes()
-            .Where(t => t.IsClass && !t.IsAbstract
-            && t.BaseType==typeof(IValidatorControl))
-            .ToList();
+        if (typeAttribute.Count == 0)
+            return service.BuildServiceProvider();
 
-        types.ForEach(impl =>
+        typeAttribute.ForEach(impl =>
         {
             //获取生命周期
             var lifetime = impl.GetCustomAttribute<ValidatorAttribute>().LifeTime;
@@ -87,6 +84,6 @@ public static class ValidatorExtensions
                     break;
             }
         });
-        return service;
+        return service.BuildServiceProvider();
     }
 }
