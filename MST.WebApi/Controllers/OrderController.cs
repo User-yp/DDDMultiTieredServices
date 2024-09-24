@@ -24,16 +24,14 @@ public class OrderController : ControllerBase
     private readonly BaseDbContext dbContext;
     private readonly IEventBus eventBus;
     private readonly IRedisService redisService;
-    private readonly ValidatorControl validator;
 
-    public OrderController(DomainService domainService, BaseDbContext dbContext,IEventBus eventBus,
-        IRedisService redisService, ValidatorControl validator)
+    public OrderController(DomainService domainService, BaseDbContext dbContext, IEventBus eventBus,
+        IRedisService redisService)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
         this.eventBus = eventBus;
         this.redisService = redisService;
-        this.validator = validator;
     }
 
     #region Init
@@ -63,9 +61,8 @@ public class OrderController : ControllerBase
         //await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
         //var res = NormalRandomHelper.GetNormalDoubles(50);
 
-        Type type = typeof(ValidatorControl); 
-        //var res = await validator.TestRequset.RequestValidateAsync(request);
-        return Ok();
+        var res = await ValidatorControl.TestRequset.RequestValidateAsync(request);
+        return Ok(res);
     }
 
     [HttpGet("")]
@@ -80,17 +77,13 @@ public class OrderController : ControllerBase
     [HttpPost("")]
     public async Task<ActionResult<bool>> AddOrderAsync([FromBody] AddOrderRequset request)
     {
-        /*var val = await validator.ValidateAsync(new ValidationContext<AddOrderRequset>(request));
-        if (!val.IsValid)
-            return BadRequest(new { Code = 401, Msg = val.Errors.ToArray().ToString() });*/
-        var a = await validator.AddOrderRequset.RequestValidateAsync(request);
+        var a = await ValidatorControl.AddOrderRequset.RequestValidateAsync(request);
 
-        return Ok(a);
-        /*(var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
+        (var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
         if (!ope.Succeeded)
             return BadRequest(ope.Errors);
 
-        return Ok(res);*/
+        return Ok(res);
     }
 
     [HttpGet("{id}")]
@@ -102,9 +95,9 @@ public class OrderController : ControllerBase
         return Ok(res);
     }
     [HttpPost("{id},{name}")]
-    public async Task<ActionResult<bool>> UpdateNameByIdAsync([FromRoute] Guid id,string name)
+    public async Task<ActionResult<bool>> UpdateNameByIdAsync([FromRoute] Guid id, string name)
     {
-        (var ope, var res) = await domainService.UpdateNameByIdAsync(id,name);
+        (var ope, var res) = await domainService.UpdateNameByIdAsync(id, name);
         if (!ope.Succeeded)
             return BadRequest(ope.Errors);
         return Ok(res);
