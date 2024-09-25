@@ -1,4 +1,4 @@
-﻿namespace MTS.WebApi.Requset_Validator;
+﻿namespace Validation;
 
 public interface RequsetBase
 {

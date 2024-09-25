@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Infrastructure;
-using Validation;
 using EventBus.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +20,7 @@ using Jwt.Extensions;
 using Commons.Options;
 using CacheServices.RedisService;
 using Commons.OperateHelper;
+using Validation.Extensions;
 
 namespace CommonInitializer;
 
@@ -46,7 +46,7 @@ public static class WebApplicationBuilderExtensions
         IConfiguration configuration = builder.Configuration;
 
         //获取所有程序集
-        var assemblies = ReflectionHelper.GetAllReferencedAssemblies();
+        var assemblies = AssemblyHelper.GetAllReferencedAssemblies();
 
         //注册每个项目ModuleInitializer中自定义服务
         services.RunModuleInitializers(assemblies);

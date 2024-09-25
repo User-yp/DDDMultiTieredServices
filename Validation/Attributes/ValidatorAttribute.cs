@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Validation;
+namespace Validation.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ValidatorAttribute : Attribute
