@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using MTS.WebApi.Requset_Validator;
 
-namespace Validation;
+namespace Validation.Extensions;
 
-public static  class RequestExtensions 
+public static class RequestExtensions
 {
-    public static async Task< ValidatorResult> RequestValidateAsync<T>(this IValidator validator,T request) where T :RequsetBase 
+    public static async Task<ValidatorResult> RequestValidateAsync<T>(this IValidator validator, T request) where T : RequsetBase
     {
         var val = await validator.ValidateAsync(new ValidationContext<T>(request));
         if (!val.IsValid)

@@ -15,14 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-/*//ApplicationBuilder
+//ApplicationBuilder
 builder.ConfigureDbConfiguration();
 //WebApplicationBuilder
 builder.ConfigureExtraServices(new InitializerOptions
 {
     EventBusQueueName = "MST.WebApi",
     LogFilePath = "e:/Log/MTS-Service.log"
-});*/
+});
 
 builder.Services.AddControllers();
 
@@ -34,8 +34,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-var serviceProvider = builder.Services.AddFluentValidation(Assembly.GetExecutingAssembly());
-ValidatorControl.init(serviceProvider);
 
 
 
@@ -54,7 +52,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderService.WebAPI v1"));
 }
 
-//app.UseDefault();
+app.UseDefault();
 
 app.MapControllers();
 

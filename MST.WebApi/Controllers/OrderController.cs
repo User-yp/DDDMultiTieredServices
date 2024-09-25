@@ -11,7 +11,7 @@ using MTS.Infrastructure;
 using MTS.WebApi.Mapping;
 using MTS.WebApi.Requset_Validator;
 using System.Runtime.CompilerServices;
-using Validation;
+using Validation.Extensions;
 
 namespace MTS.WebApi.Controllers;
 

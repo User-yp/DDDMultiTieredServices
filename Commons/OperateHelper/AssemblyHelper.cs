@@ -7,7 +7,7 @@ using Commons.OperateHelper;
 
 namespace Commons.OperateHelper;
 
-public static class ReflectionHelper
+public static class AssemblyHelper
 {
 
     /// <summary>
