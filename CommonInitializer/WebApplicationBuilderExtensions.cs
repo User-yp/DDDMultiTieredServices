@@ -21,6 +21,7 @@ using Commons.Options;
 using CacheServices.RedisService;
 using Commons.OperateHelper;
 using Validation.Extensions;
+using Microsoft.Data.SqlClient;
 
 namespace CommonInitializer;
 
@@ -31,12 +32,12 @@ public static class WebApplicationBuilderExtensions
         builder.Host.ConfigureAppConfiguration((hostCtx, configBuilder) =>
         {
             //从Apollo获取Configuration
-            configBuilder.AddApollo(hostCtx.Configuration.GetSection("apollo"))
-            .AddNamespace("User.CommonConfiguration", ConfigFileFormat.Json).AddDefault();
+            /*configBuilder.AddApollo(hostCtx.Configuration.GetSection("apollo"))
+            .AddNamespace("User.CommonConfiguration", ConfigFileFormat.Json).AddDefault();*/
 
             //从数据库配置服务器获取Configuration
-            /*string connStr = builder.Configuration.GetValue<string>("DefaultDB:ConnStr");
-            configBuilder.AddDbConfiguration(() => new SqlConnection(connStr), reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));*/
+            string connStr = builder.Configuration.GetValue<string>("ConnStr");
+            configBuilder.AddDbConfiguration(() => new SqlConnection(connStr), reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));
         });
     }
 

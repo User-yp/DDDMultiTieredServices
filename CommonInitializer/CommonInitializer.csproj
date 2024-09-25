@@ -24,6 +24,7 @@
     <ProjectReference Include="..\ASPNETCore\ASPNETCore.csproj" />
     <ProjectReference Include="..\CacheServices\CacheServices.csproj" />
     <ProjectReference Include="..\Commons\Commons.csproj" />
+    <ProjectReference Include="..\DBConfigProvider\DBConfigProvider.csproj" />
     <ProjectReference Include="..\EventBus\EventBus.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Jwt\Jwt.csproj" />
