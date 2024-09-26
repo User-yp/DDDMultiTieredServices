@@ -4,7 +4,7 @@ using Validation.Attributes;
 
 namespace MTS.WebApi.Requset_Validator;
 
-[Validator(typeof(TestRequsetValidator), ServiceLifetime.Scoped)]
+[Validator(typeof(TestRequsetValidator))]
 public record TestRequset(int num,string length):RequsetBase;
 public class TestRequsetValidator : AbstractValidator<TestRequset>
 {

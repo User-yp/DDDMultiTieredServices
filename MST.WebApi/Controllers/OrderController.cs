@@ -57,12 +57,12 @@ public class OrderController : ControllerBase
     [HttpPost("[action]")]
     public async Task<IActionResult> TestActionAsync([FromBody] TestRequset request)
     {
-        //eventBus.Publish("RabbitMqController", "eventTest");
-        //await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
+        eventBus.Publish("RabbitMqController", "eventTest");
+        await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
         //var res = NormalRandomHelper.GetNormalDoubles(50);
 
-        var res = await ValidatorControl.TestRequset.RequestValidateAsync(request);
-        return Ok(res);
+        var ves = await ValidatorControl.TestRequset.RequestValidateAsync(request);
+        return Ok(ves);
     }
 
     [HttpGet("")]
