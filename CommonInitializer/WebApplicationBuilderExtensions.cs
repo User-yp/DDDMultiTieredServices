@@ -27,6 +27,7 @@ namespace CommonInitializer;
 
 public static class WebApplicationBuilderExtensions
 {
+
     public static void ConfigureDbConfiguration(this WebApplicationBuilder builder)
     {
         builder.Host.ConfigureAppConfiguration((hostCtx, configBuilder) =>
@@ -58,7 +59,7 @@ public static class WebApplicationBuilderExtensions
             //连接字符串如果放到appsettings.json中，会有泄密的风险
             //如果放到UserSecrets中，每个项目都要配置，很麻烦
             //因此这里推荐放到环境变量中。
-            string connStr = configuration.GetSection("ConnStr").Get<string>();
+            string connStr = configuration.GetSection(nameof(ConnStr)).Get<string>();
             //string connStr = configuration.GetValue<string>(nameof(ConnStr));
             ctx.UseSqlServer(connStr);
         }, assemblies);

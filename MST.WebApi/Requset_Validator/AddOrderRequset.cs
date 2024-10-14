@@ -6,7 +6,7 @@ using Validation.Attributes;
 namespace MTS.WebApi.Requset_Validator;
 
 [Validator(typeof(AddOrderRequsetValidator))]
-public record AddOrderRequset(string OrderName, string ProductName, string ProductDescription): RequsetBase;
+public record AddOrderRequset(string OrderName, string ProductName, string ProductDescription): IValidatorBase;
 
 public class AddOrderRequsetValidator : AbstractValidator<AddOrderRequset>
 {

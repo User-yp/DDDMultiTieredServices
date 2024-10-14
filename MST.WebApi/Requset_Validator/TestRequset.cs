@@ -5,7 +5,7 @@ using Validation.Attributes;
 namespace MTS.WebApi.Requset_Validator;
 
 [Validator(typeof(TestRequsetValidator))]
-public record TestRequset(int num,string length):RequsetBase;
+public record TestRequset(int num,string length):IValidatorBase;
 public class TestRequsetValidator : AbstractValidator<TestRequset>
 {
     public TestRequsetValidator()

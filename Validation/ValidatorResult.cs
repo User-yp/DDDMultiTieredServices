@@ -4,8 +4,8 @@ namespace Validation;
 
 public class ValidatorResult
 {
-    public int ErrorCount { get; private set; } = 0;
     public bool IsValid { get; private set; } = true;
+    public int ErrorCount { get; private set; } = 0;
     public List<ErrorMessage>? ErrorMessage { get; private set; } = [];
     public ValidatorResult()
     {

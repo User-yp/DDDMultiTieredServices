@@ -11,7 +11,7 @@ using MTS.Infrastructure;
 using MTS.WebApi.Mapping;
 using MTS.WebApi.Requset_Validator;
 using System.Runtime.CompilerServices;
-using Validation.Extensions;
+using Validation;
 
 namespace MTS.WebApi.Controllers;
 
@@ -24,14 +24,16 @@ public class OrderController : ControllerBase
     private readonly BaseDbContext dbContext;
     private readonly IEventBus eventBus;
     private readonly IRedisService redisService;
+    private readonly IValidatorControl validator;
 
     public OrderController(DomainService domainService, BaseDbContext dbContext, IEventBus eventBus,
-        IRedisService redisService)
+        IRedisService redisService,IValidatorControl validator)
     {
         this.domainService = domainService;
         this.dbContext = dbContext;
         this.eventBus = eventBus;
         this.redisService = redisService;
+        this.validator = validator;
     }
 
     #region Init
@@ -57,11 +59,11 @@ public class OrderController : ControllerBase
     [HttpPost("[action]")]
     public async Task<IActionResult> TestActionAsync([FromBody] TestRequset request)
     {
-        eventBus.Publish("RabbitMqController", "eventTest");
-        await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
+        //eventBus.Publish("RabbitMqController", "eventTest");
+        //await redisService.StringSetAsync("redisTest", $"{DateTime.Now}-redis服务测试", TimeSpan.FromSeconds(60));
         //var res = NormalRandomHelper.GetNormalDoubles(50);
 
-        var ves = await ValidatorControl.TestRequset.RequestValidateAsync(request);
+        var ves = await validator.RequestValidateAsync(request);
         return Ok(ves);
     }
 
@@ -77,7 +79,6 @@ public class OrderController : ControllerBase
     [HttpPost("")]
     public async Task<ActionResult<bool>> AddOrderAsync([FromBody] AddOrderRequset request)
     {
-        var a = await ValidatorControl.AddOrderRequset.RequestValidateAsync(request);
 
         (var ope, var res) = await domainService.AddOrderAsync(request.AddOrderMapping());
         if (!ope.Succeeded)
